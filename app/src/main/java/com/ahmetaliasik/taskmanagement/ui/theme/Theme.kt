@@ -1,6 +1,5 @@
 package com.ahmetaliasik.taskmanagement.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -23,9 +22,9 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = ColorWhite,
     secondary = ColorSecondary,
     tertiary = Pink40,
-    surface = LightPurpleBackgroundLightTheme,
-
-
+    surface = ColorWhite,
+    secondaryContainer = LightSecondaryContainerColor,
+    surfaceContainerLow = LightPurpleBackgroundLightTheme,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
