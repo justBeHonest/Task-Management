@@ -57,5 +57,7 @@ class BottomNavbarCutOutShape(val fabRadius: Float) : Shape {
 @Preview
 @Composable
 fun HomeViewPreview() {
-    HomeView()
+    HomeView(
+        navigateToAddProjectInTaskView = {}
+    )
 }

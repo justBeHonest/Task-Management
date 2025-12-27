@@ -33,7 +33,7 @@ import com.ahmetaliasik.taskmanagement.ui.theme.custom_shape.BottomNavbarCutOutS
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeView() {
+fun HomeView(navigateToAddProjectInTaskView : () -> Unit) {
     val fabSize = 56.dp
     val fabOverlap = (fabSize / 2) + 17.dp
 
@@ -49,7 +49,8 @@ fun HomeView() {
             )
         }, floatingActionButton = {
             FloatingActionButton(
-                shape = CircleShape, onClick = {},
+                shape = CircleShape,
+                onClick = navigateToAddProjectInTaskView,
                 modifier = Modifier
                     .offset(y = fabOverlap),
                 /*.shadow(
@@ -85,5 +86,7 @@ fun BottomNavGraph(navController: NavHostController) {
 @Preview
 @Composable
 fun HomeViewPreview() {
-    HomeView()
+    HomeView(
+        navigateToAddProjectInTaskView = {}
+    )
 }

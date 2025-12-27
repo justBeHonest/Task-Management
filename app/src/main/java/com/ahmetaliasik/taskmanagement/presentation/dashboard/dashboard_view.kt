@@ -105,6 +105,8 @@ val dummyList = listOf<TaskGroupData>(
 @Composable
 fun HomeViewPreview() {
     TaskManagementTheme {
-        HomeView()
+        HomeView(
+            navigateToAddProjectInTaskView = {}
+        )
     }
 }

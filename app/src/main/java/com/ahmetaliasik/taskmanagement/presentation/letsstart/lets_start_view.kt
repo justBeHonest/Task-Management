@@ -25,7 +25,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ahmetaliasik.taskmanagement.R
+import com.ahmetaliasik.taskmanagement.core.enum.PrimaryButtonType
 import com.ahmetaliasik.taskmanagement.presentation.components.PrimaryButton
 import com.ahmetaliasik.taskmanagement.ui.theme.TaskManagementTheme
 
@@ -74,6 +76,8 @@ fun LetsStartView(onNavigateToHome: () -> Unit) {
                             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onPrimary)
                         )
                     },
+                    buttonType = PrimaryButtonType.Primary,
+                    fontSize = 19.sp,
                 )
 
             }

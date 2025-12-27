@@ -16,8 +16,9 @@ val ColorPrimary = Color(0xFF5F33E1)
 
 val ColorBlack = Color(0xFF24252C)
 
-val ColorWhite = Color(0xFFFAFAFA)
+val ColorWhite = Color(0xFFFFFFFF)
 
+val LightSecondaryContainerColor = Color(0xFFEDE8FF)
 val LightPurpleBackgroundLightTheme = Color(0xFFEEE9FF)
 val DarkPurpleBackground = Color(0xFF1E1B26)  // Dark Tema için (Örnek koyu renk)
 
