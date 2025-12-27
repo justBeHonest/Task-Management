@@ -14,24 +14,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.ahmetaliasik.taskmanagement.R
+import com.ahmetaliasik.taskmanagement.core.enum.PrimaryButtonType
+
 
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String? = null, onClick: () -> Unit,
-    lightButton: Boolean = false,
+    fontSize: TextUnit? = null,
+    buttonType: PrimaryButtonType,
     trailing: @Composable (() -> Unit)? = null,
     leading: @Composable (() -> Unit)? = null,
 ) {
-    val containerColor =
-        if (lightButton) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
-    val textColor =
-        if (lightButton) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary
-    val textStyle =
-        if (lightButton) MaterialTheme.typography.titleSmall else MaterialTheme.typography.headlineSmall
+    val containerColor = when (buttonType) {
+        PrimaryButtonType.Primary -> MaterialTheme.colorScheme.primary
+        PrimaryButtonType.Light -> MaterialTheme.colorScheme.onPrimary
+        PrimaryButtonType.Disabled -> MaterialTheme.colorScheme.secondaryContainer
+    }
+    val textColor = when (buttonType) {
+        PrimaryButtonType.Primary -> MaterialTheme.colorScheme.onPrimary
+        PrimaryButtonType.Light -> MaterialTheme.colorScheme.primary
+        PrimaryButtonType.Disabled -> MaterialTheme.colorScheme.primary
+    }
+    val textStyle = when (buttonType) {
+        PrimaryButtonType.Primary -> MaterialTheme.typography.titleSmall
+        PrimaryButtonType.Light -> MaterialTheme.typography.titleSmall
+        PrimaryButtonType.Disabled -> MaterialTheme.typography.bodyLarge
+    }
+
     Button(
+        modifier = modifier,
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
@@ -39,7 +54,6 @@ fun PrimaryButton(
         )
     ) {
         Box(
-            modifier = modifier,
             contentAlignment = Alignment.Center
         ) {
             leading?.let { Box(modifier = Modifier.align(Alignment.CenterStart)) { it() } }
@@ -49,6 +63,7 @@ fun PrimaryButton(
                         text = it,
                         style = textStyle,
                         color = textColor,
+                        fontSize = fontSize ?: textStyle.fontSize,
                     )
                 }
             }
@@ -57,6 +72,7 @@ fun PrimaryButton(
 
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -70,5 +86,7 @@ fun PrimaryButtonPreview() {
                 modifier = Modifier.size(24.dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
             )
-        })
+        },
+        buttonType = PrimaryButtonType.Primary,
+    )
 }

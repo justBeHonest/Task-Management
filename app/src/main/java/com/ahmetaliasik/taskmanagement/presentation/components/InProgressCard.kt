@@ -93,7 +93,7 @@ fun IconContainer(modifier: Modifier = Modifier, iconColor: Color, painterId: In
                 .padding(5.dp)
         ) {
             Image(
-                painter = painterResource(R.drawable.briefcase),
+                painter = painterResource(painterId),
                 contentDescription = "Icon",
                 modifier = Modifier.size(size),
                 colorFilter = ColorFilter.tint(color = iconColor)

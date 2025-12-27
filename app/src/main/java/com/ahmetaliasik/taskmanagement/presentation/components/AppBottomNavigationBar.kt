@@ -42,7 +42,7 @@ fun AppBottomNavigationBar(modifier: Modifier = Modifier, navController: NavCont
     )
 
     BottomAppBar(
-        modifier = modifier, containerColor = MaterialTheme.colorScheme.surface,
+        modifier = modifier, containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -97,5 +97,7 @@ fun AppBottomNavigationBar(modifier: Modifier = Modifier, navController: NavCont
 @Preview
 @Composable
 fun HomeViewPreview() {
-    HomeView()
+    HomeView(
+        navigateToAddProjectInTaskView = {}
+    )
 }
