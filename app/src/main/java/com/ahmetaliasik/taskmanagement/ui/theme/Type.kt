@@ -22,6 +22,12 @@ val LexendDeca = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    bodySmall = TextStyle(
+        fontFamily = LexendDeca,
+        fontWeight = FontWeight.Normal,
+        fontSize = 9.sp,
+    ),
+
     bodyMedium = TextStyle(
         fontFamily = LexendDeca,
         fontWeight = FontWeight.Normal,
