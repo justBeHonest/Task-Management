@@ -52,11 +52,16 @@ import com.ahmetaliasik.taskmanagement.presentation.components.DateSelectorCard
 import com.ahmetaliasik.taskmanagement.presentation.components.IconContainer
 import com.ahmetaliasik.taskmanagement.presentation.components.ImagePickerCard
 import com.ahmetaliasik.taskmanagement.presentation.components.PrimaryButton
+import com.ahmetaliasik.taskmanagement.presentation.viewmodel.TaskViewModel
 import com.ahmetaliasik.taskmanagement.ui.theme.TaskManagementTheme
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProjectInTaskList() {
+fun AddProjectInTaskList(
+    viewModel: TaskViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
     var selectedGroup by remember { mutableStateOf(TaskGroup.OfficeProject) }
     var projectName by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -70,7 +75,7 @@ fun AddProjectInTaskList() {
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
-    ) { uri : Uri? -> selectedImageUri = uri }
+    ) { uri: Uri? -> selectedImageUri = uri }
 
     if (activeDateSelection != null) {
         DatePickerDialog(
@@ -102,7 +107,20 @@ fun AddProjectInTaskList() {
         topBar = { AppBar(title = "Add Project") },
         floatingActionButton = {
             PrimaryButton(
-                onClick = {},
+                onClick = {
+
+                    if (projectName.isNotEmpty() && startDate != null && endDate != null) {
+                        val nowSinceEproach = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                        viewModel.saveTask(
+                            title = projectName,
+                            description = description,
+                            group = selectedGroup,
+                            startDate = startDate ?: nowSinceEproach,
+                            endDate = endDate ?: nowSinceEproach,
+                            imageUri = selectedImageUri?.toString()
+                        )
+                    }
+                },
                 buttonType = PrimaryButtonType.Primary,
                 modifier = Modifier
                     .fillMaxWidth()
