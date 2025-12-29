@@ -10,14 +10,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ahmetaliasik.taskmanagement.R
+import com.ahmetaliasik.taskmanagement.presentation.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(modifier: Modifier = Modifier, title: String) {
+fun AppBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    viewModel: TaskViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+) {
+    val taskCount by viewModel.todaysTaskCount.collectAsState()
+
     CenterAlignedTopAppBar(
         modifier = modifier,
         title = {
@@ -35,8 +44,10 @@ fun AppBar(modifier: Modifier = Modifier, title: String) {
             )
         },
         actions = {
-            val badge = true
-            NotificationIconWithBadge(modifier = Modifier.padding(end = 22.dp),badge = badge)
+            NotificationIconWithBadge(
+                modifier = Modifier.padding(end = 22.dp),
+                badge = taskCount > 0
+            )
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background, // Arkaplan rengi
