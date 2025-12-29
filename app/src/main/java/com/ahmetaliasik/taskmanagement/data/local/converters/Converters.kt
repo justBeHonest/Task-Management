@@ -7,40 +7,43 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-
 class Converters {
+
+    // --- Tarih Çeviricileri ---
     @TypeConverter
-    fun fromTimeStamp(value: Long?): LocalDateTime? {
+    fun fromTimestamp(value: Long?): LocalDateTime? {
         return value?.let {
             LocalDateTime.ofInstant(Instant.ofEpochMilli(value), ZoneId.systemDefault())
         }
     }
 
     @TypeConverter
-    fun dateToTimeStamp(date: LocalDateTime?): Long? {
+    fun dateToTimestamp(date: LocalDateTime?): Long? {
         return date?.atZone(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
     }
 
+    // --- TaskGroup Enum Çeviricileri ---
     @TypeConverter
     fun fromTaskGroup(value: String): TaskGroup {
         return try {
             TaskGroup.valueOf(value)
         } catch (e: Exception) {
-            TaskGroup.OfficeProject
+            TaskGroup.OfficeProject // Hata olursa varsayılan
         }
     }
 
     @TypeConverter
-    fun taskGroupToString(group: TaskType): String {
+    fun taskGroupToString(group: TaskGroup): String {
         return group.name
     }
 
+    // --- TaskType Enum Çeviricileri ---
     @TypeConverter
     fun fromTaskType(value: String): TaskType {
         return try {
             TaskType.valueOf(value)
         } catch (e: Exception) {
-            TaskType.Todo
+            TaskType.Todo // Varsayılan
         }
     }
 
