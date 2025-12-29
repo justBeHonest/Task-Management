@@ -21,6 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +34,10 @@ import com.ahmetaliasik.taskmanagement.R
 import com.ahmetaliasik.taskmanagement.core.enum.PrimaryButtonType
 import com.ahmetaliasik.taskmanagement.core.enum.TaskGroup
 import com.ahmetaliasik.taskmanagement.core.enum.TaskType
-import com.ahmetaliasik.taskmanagement.core.model.Task
 import com.ahmetaliasik.taskmanagement.presentation.components.AppBar
 import com.ahmetaliasik.taskmanagement.presentation.components.IconContainer
 import com.ahmetaliasik.taskmanagement.presentation.components.PrimaryButton
+import com.ahmetaliasik.taskmanagement.presentation.viewmodel.TaskViewModel
 import com.ahmetaliasik.taskmanagement.ui.theme.TaskManagementTheme
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -45,7 +47,11 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodaysTaskView() {
+fun TodaysTaskView(
+    viewModel: TaskViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+    val tasks by viewModel.todaysTasks.collectAsState()
+
     Scaffold(
         topBar = {
             AppBar(title = "Today's Tasks")
@@ -98,8 +104,8 @@ fun TodaysTaskView() {
 
             item { Spacer(modifier = Modifier.height(44.dp)) }
 
-            items(dummyTasks.size) { index ->
-                val task = dummyTasks[index]
+            items(tasks.size) { index ->
+                val task = tasks[index]
                 TaskCard(
                     title = task.title,
                     subTitle = task.description,
@@ -107,7 +113,7 @@ fun TodaysTaskView() {
                     taskGroup = task.taskGroup,
                     painterId = task.taskGroup.painterId,
                     taskCound = 0,
-                    date = task.date,
+                    date = task.startDate,
                 )
                 Spacer(modifier = Modifier.height(48.dp))
             }
@@ -116,33 +122,41 @@ fun TodaysTaskView() {
     }
 }
 
-val dummyTasks = listOf<Task>(
-    Task(
-        taskType = TaskType.Completed,
-        taskGroup = TaskGroup.OfficeProject,
-        title = "Market Research",
-        description = "Grocery shopping app design",
-        date = LocalDateTime.now()
-    ), Task(
-        taskType = TaskType.InProgress,
-        taskGroup = TaskGroup.OfficeProject,
-        title = "Competitive Analysis",
-        description = "Grocery shopping app design",
-        date = LocalDateTime.now()
-    ), Task(
-        taskType = TaskType.Todo,
-        taskGroup = TaskGroup.PersonalProject,
-        title = "Create Low-fidelity Wireframe",
-        description = "Uber Eats redesign challange",
-        date = LocalDateTime.now()
-    ), Task(
-        taskType = TaskType.Todo,
-        taskGroup = TaskGroup.DailyStudy,
-        title = "How to pitch a Design Sprint",
-        description = "About design sprint",
-        date = LocalDateTime.now()
-    )
-)
+//val dummyTasks = listOf<Task>(
+//    Task(
+//        taskType = TaskType.Completed,
+//        taskGroup = TaskGroup.OfficeProject,
+//        title = "Market Research",
+//        description = "Grocery shopping app design",
+//        startDate = LocalDateTime.now(),
+//        endDate =  LocalDateTime.now(),
+//        logoUri = null,
+//    ), Task(
+//        taskType = TaskType.InProgress,
+//        taskGroup = TaskGroup.OfficeProject,
+//        title = "Competitive Analysis",
+//        description = "Grocery shopping app design",
+//        startDate = LocalDateTime.now(),
+//        endDate =  LocalDateTime.now(),
+//        logoUri = null,
+//    ), Task(
+//        taskType = TaskType.Todo,
+//        taskGroup = TaskGroup.PersonalProject,
+//        title = "Create Low-fidelity Wireframe",
+//        description = "Uber Eats redesign challange",
+//        startDate = LocalDateTime.now(),
+//        endDate =  LocalDateTime.now(),
+//        logoUri = null,
+//    ), Task(
+//        taskType = TaskType.Todo,
+//        taskGroup = TaskGroup.DailyStudy,
+//        title = "How to pitch a Design Sprint",
+//        description = "About design sprint",
+//        startDate = LocalDateTime.now(),
+//        endDate =  LocalDateTime.now(),
+//        logoUri = null,
+//    )
+//)
 
 @Composable
 fun TaskCard(
